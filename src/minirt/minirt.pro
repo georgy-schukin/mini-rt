@@ -19,6 +19,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES +=  \
     color.cpp \
     image.cpp \
+    jpge.cpp \
     point_3d.cpp \
     point_light.cpp \
     ray.cpp \
@@ -30,6 +31,7 @@ SOURCES +=  \
 HEADERS += didal.h  \
     color.h \
     image.h \
+    jpge.h \
     minirt.h \
     point_3d.h \
     point_light.h \
