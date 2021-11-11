@@ -96,18 +96,21 @@ Color Scene::illumination(const Ray &ray, int recursionStep) const {
     }
 
     // Normal for the sphere and reflected ray.
-    Vector3D normal = closestSphere->normalTo(closestIntersectionPoint);
-    Vector3D reflectedRayDirection = ray.direction - 2 * normal.dot(ray.direction) * normal;
+    Vector3D normal = closestSphere->normalTo(closestIntersectionPoint);    
+    Vector3D toViewer = -ray.direction;
+    Vector3D reflected = 2 * normal.dot(toViewer) * normal - toViewer;
 
-    Color color;
+    // Add ambient light.
+    Color color = closestSphere->material.shadeAmbient(ambientLight);
+
     // Add illumination from each light.
     for (const auto &light: lights) {
         // Check if the point on the object is illuminated by this light (not obscured by an obstacle).
-        Vector3D directionToLight = light.position - closestIntersectionPoint;
-        double distanceToLight = directionToLight.length();
-        directionToLight = directionToLight.normalized();
+        Vector3D toLight = light.position - closestIntersectionPoint;
+        double distanceToLight = toLight.length();
+        toLight = toLight.normalized();
         Point3D intersectionPoint;
-        auto obstacle = intersect(Ray {closestIntersectionPoint, directionToLight}, intersectionPoint);
+        auto obstacle = intersect(Ray {closestIntersectionPoint, toLight}, intersectionPoint);
         if (obstacle) {
             // Check if the light is closer then the intersected object.
             double distanceToObstacle = (intersectionPoint - closestIntersectionPoint).length();
@@ -117,19 +120,16 @@ Color Scene::illumination(const Ray &ray, int recursionStep) const {
         }
         if (!obstacle) {
             // Apply coefficients of the body color to the intensity of the light source.
-            color += light.color * closestSphere->color * std::max(0.0, reflectedRayDirection.dot(directionToLight));
+            color += closestSphere->material.shadeDiffuseAndSpecular(light.color, normal, reflected, toLight, toViewer);
         }
     }
 
-    // Add ambient light.
-    color += ambientLight * closestSphere->color;
-
     // Add reflection.
-    Ray reflectedRay {closestIntersectionPoint, reflectedRayDirection.normalized()};
+    Ray reflectedRay {closestIntersectionPoint, reflected.normalized()};
     Color reflectionColor = illumination(reflectedRay, recursionStep + 1);
-    color += closestSphere->color * reflectionColor;
+    color += reflectionColor;
 
-    return color;
+    return color * closestSphere->material.color;
 }
 
 }

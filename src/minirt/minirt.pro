@@ -20,6 +20,7 @@ SOURCES +=  \
     color.cpp \
     image.cpp \
     jpge.cpp \
+    material.cpp \
     point_3d.cpp \
     point_light.cpp \
     ray.cpp \
@@ -33,6 +34,7 @@ HEADERS += didal.h  \
     color.h \
     image.h \
     jpge.h \
+    material.h \
     minirt.h \
     point_3d.h \
     point_light.h \

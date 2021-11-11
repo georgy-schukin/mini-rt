@@ -5,8 +5,12 @@
 
 namespace minirt {
 
+Sphere::Sphere(const Point3D &position, double radius, const Material &material) :
+    position(position), radius(radius), material(material) {
+}
+
 Sphere::Sphere(const Point3D &position, double radius, const Color &color) :
-    position(position), radius(radius), color(color) {
+    position(position), radius(radius), material(color) {
 }
 
 // Check intersection with the sphere.

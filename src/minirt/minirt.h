@@ -2,6 +2,7 @@
 
 #include "color.h"
 #include "image.h"
+#include "material.h"
 #include "point_3d.h"
 #include "point_light.h"
 #include "ray.h"

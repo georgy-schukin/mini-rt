@@ -20,7 +20,7 @@ void initScene(Scene &scene) {
     scene.addSphere(Sphere {{2.2, 0.5, 9}, 1.2, white});
     scene.addSphere(Sphere {{4, -1, 10}, 0.7, red});
 
-    scene.addLight(PointLight {{-15, 0, -15}, white});
+    scene.addLight(PointLight {{-15, 1, -15}, white});
     scene.addLight(PointLight {{1, 1, 0}, blue});
     scene.addLight(PointLight {{0, -10, 6}, red});
 
