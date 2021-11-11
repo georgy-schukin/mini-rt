@@ -23,6 +23,7 @@ SOURCES +=  \
     point_3d.cpp \
     point_light.cpp \
     ray.cpp \
+    sampler.cpp \
     scene.cpp \
     sphere.cpp \
     vector_3d.cpp \
@@ -36,6 +37,7 @@ HEADERS += didal.h  \
     point_3d.h \
     point_light.h \
     ray.h \
+    sampler.h \
     scene.h \
     sphere.h \
     vector_3d.h \
