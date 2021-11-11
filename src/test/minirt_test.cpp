@@ -6,19 +6,26 @@
 using namespace minirt;
 
 void initScene(Scene &scene) {
-    Color red = {1, 0.2, 0.2};
-    Color blue = {0.2, 0.2, 1};
-    Color green = {0.2, 1, 0.2};
-    Color white = {0.8, 0.8, 0.8};
-    Color yellow = {1, 1, 0.2};
+    Color red {1, 0.2, 0.2};
+    Color blue {0.2, 0.2, 1};
+    Color green {0.2, 1, 0.2};
+    Color white {0.8, 0.8, 0.8};
+    Color yellow {1, 1, 0.2};
 
-    scene.addSphere(Sphere {{0, -2, 7}, 1, blue});
-    scene.addSphere(Sphere {{-3, 2, 11}, 2, red});
-    scene.addSphere(Sphere {{0, 2, 8}, 1, green});
-    scene.addSphere(Sphere {{1.5, -0.5, 7}, 1, white});
-    scene.addSphere(Sphere {{-2, -1, 6}, 0.7, yellow});
-    scene.addSphere(Sphere {{2.2, 0.5, 9}, 1.2, white});
-    scene.addSphere(Sphere {{4, -1, 10}, 0.7, red});
+    Material blueM {blue, 0.4, 0.6};
+    Material redShiny {red, white, 50};
+    Material whiteShiny {Color {0.2}, Color {0.8}, 100};
+    Material whiteMatte {Color {0.6}, Color {0.4}, 10};
+    Material yellowM {yellow, white};
+    Material greenM {green, green};
+
+    scene.addSphere(Sphere {{0, -2, 7}, 1, blueM});
+    scene.addSphere(Sphere {{-3, 2, 11}, 2, redShiny});
+    scene.addSphere(Sphere {{0, 2, 8}, 1, greenM});
+    scene.addSphere(Sphere {{1.5, -0.5, 7}, 1, whiteShiny});
+    scene.addSphere(Sphere {{-2, -1, 6}, 0.7, yellowM});
+    scene.addSphere(Sphere {{2.2, 0.5, 9}, 1.2, whiteMatte});
+    scene.addSphere(Sphere {{4, -1, 10}, 0.7, redShiny});
 
     scene.addLight(PointLight {{-15, 1, -15}, white});
     scene.addLight(PointLight {{1, 1, 0}, blue});

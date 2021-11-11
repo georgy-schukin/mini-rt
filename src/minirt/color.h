@@ -9,7 +9,7 @@ struct Color {
 
     Color();
     Color(double r, double g, double b);
-    Color(double c);
+    explicit Color(double c);
 
     void operator +=(const Color &c);
 

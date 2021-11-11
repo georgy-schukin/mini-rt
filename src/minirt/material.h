@@ -10,16 +10,14 @@ class Material {
 public:
     Material();
     Material(const Color &color);
-    Material(const Color &color, double ambientCoeff, double diffuseCoeff, double specularCoeff, double shininess);
+    Material(const Color &diffuse, const Color &specular, double shininess = 25);
+    Material(const Color &color, double diffuseCoeff, double specularCoeff, double shininess = 25);
 
-    Color shadeAmbient(const Color &lightAmbient) const;
-    Color shadeDiffuseAndSpecular(const Color &light, const Vector3D &normal, const Vector3D &reflected, const Vector3D &toLight, const Vector3D &toViewer) const;
+    Color shade(const Color &lightColor, const Vector3D &normal, const Vector3D &reflected, const Vector3D &toLight, const Vector3D &toViewer) const;
 
 public:
-    Color color;
-    double ambientCoeff {0.5};
-    double diffuseCoeff {0.5};
-    double specularCoeff {0.5};
+    Color diffuseColor {1, 1, 1};
+    Color specularColor {1, 1, 1};
     double shininess {25};
 };
 

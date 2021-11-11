@@ -101,7 +101,7 @@ Color Scene::illumination(const Ray &ray, int recursionStep) const {
     Vector3D reflected = 2 * normal.dot(toViewer) * normal - toViewer;
 
     // Add ambient light.
-    Color color = closestSphere->material.shadeAmbient(ambientLight);
+    Color color = ambientLight;
 
     // Add illumination from each light.
     for (const auto &light: lights) {
@@ -120,16 +120,16 @@ Color Scene::illumination(const Ray &ray, int recursionStep) const {
         }
         if (!obstacle) {
             // Apply coefficients of the body color to the intensity of the light source.
-            color += closestSphere->material.shadeDiffuseAndSpecular(light.color, normal, reflected, toLight, toViewer);
+            color += closestSphere->material.shade(light.color, normal, reflected, toLight, toViewer);
         }
-    }
+    }    
 
     // Add reflection.
     Ray reflectedRay {closestIntersectionPoint, reflected.normalized()};
     Color reflectionColor = illumination(reflectedRay, recursionStep + 1);
-    color += reflectionColor;
+    color += closestSphere->material.specularColor * reflectionColor;
 
-    return color * closestSphere->material.color;
+    return (color);
 }
 
 }
