@@ -16,7 +16,7 @@ void initScene(Scene &scene) {
     scene.addSphere(Sphere {{0, 2, 8}, 1, green});
     scene.addSphere(Sphere {{1.5, -0.5, 7}, 1, white});
     scene.addSphere(Sphere {{-2, -1, 6}, 0.7, yellow});
-    scene.addSphere(Sphere {{2.2, 0, 8}, 1, white});
+    scene.addSphere(Sphere {{2.2, 0.5, 9}, 1.2, white});
     scene.addSphere(Sphere {{4, -1, 10}, 0.7, red});
 
     scene.addLight(PointLight {{-15, 0, -15}, white});

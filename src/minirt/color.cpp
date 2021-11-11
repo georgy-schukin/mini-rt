@@ -1,5 +1,7 @@
 #include "color.h"
 
+#include <algorithm>
+
 namespace minirt {
 
 Color::Color() :
@@ -20,6 +22,13 @@ void Color::operator +=(const Color &c) {
     blue += c.blue;
 }
 
+Color Color::clamp(double min, double max) {
+    const double r = std::max(min, std::min(max, red));
+    const double g = std::max(min, std::min(max, green));
+    const double b = std::max(min, std::min(max, blue));
+    return Color {r, g, b};
+}
+
 Color operator +(const Color &c1, const Color &c2) {
     return Color {c1.red + c2.red, c1.green + c2.green, c1.blue + c2.blue};
 }
@@ -38,6 +47,10 @@ Color operator *(const Color &c, double coeff) {
 
 Color operator *(double coeff, const Color &c) {
     return c * coeff;
+}
+
+Color operator /(const Color &c, double coeff) {
+    return c * (1.0 / coeff);
 }
 
 }

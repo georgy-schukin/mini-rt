@@ -35,10 +35,7 @@ Color ViewPlane::computePixel(const Scene &scene, const Point3D &viewPoint, int 
             distance};
         color += scene.illumination(Ray {viewPoint, rayDirection.normalized()});
     }
-    color.red = std::min(color.red / numOfSamples, 1.0);
-    color.green = std::min(color.green / numOfSamples, 1.0);
-    color.blue = std::min(color.blue / numOfSamples, 1.0);
-    return color;
+    return (color / numOfSamples).clamp();
 }
 
 }
