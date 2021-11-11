@@ -78,7 +78,7 @@ const Sphere* Scene::intersect(const Ray &ray, Point3D &closestIntersectionPoint
         }
     }
     if (closestSphere) {
-        closestIntersectionPoint = ray.origin + ray.direction * minDistance;
+        closestIntersectionPoint = ray.fromOrigin(minDistance);
     }
     return closestSphere;
 }
@@ -96,7 +96,7 @@ Color Scene::illumination(const Ray &ray, int recursionStep) const {
     }
 
     // Normal for the sphere and reflected ray.
-    Vector3D normal = (closestIntersectionPoint - closestSphere->position).normalized();
+    Vector3D normal = closestSphere->normalTo(closestIntersectionPoint);
     Vector3D reflectedRayDirection = ray.direction - 2 * normal.dot(ray.direction) * normal;
 
     Color color;

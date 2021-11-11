@@ -11,6 +11,8 @@ struct Ray {
 
     Ray();
     Ray(const Point3D &origin, const Vector3D &direction);
+
+    Point3D fromOrigin(double distance) const;
 };
 
 }
