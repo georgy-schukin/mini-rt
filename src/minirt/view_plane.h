@@ -5,21 +5,21 @@
 namespace minirt {
 
 class Point3D;
-class Scene;	
+class Scene;
 
 class ViewPlane {
-public:    
-	ViewPlane();
-    ViewPlane(int resolutionX, int resolutionZ, double sizeX, double sizeZ, double distance);
+public:
+    ViewPlane();
+    ViewPlane(int resolutionX, int resolutionY, double sizeX, double sizeY, double distance);
 
     // Compute color for the pixel with the given index.
-    Color computePixel(const Scene &scene, const Point3D &viewPoint, int x, int z, int numOfSamples = 1);
+    Color computePixel(const Scene &scene, const Point3D &viewPoint, int x, int y, int numOfSamples = 1);
 
-private:    
+private:
     int resolutionX;
-    int resolutionZ;
+    int resolutionY;
     double sizeX;
-    double sizeZ;
+    double sizeY;
     double distance;
 };
 
