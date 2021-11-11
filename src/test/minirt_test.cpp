@@ -1,6 +1,7 @@
 #include "minirt/minirt.h"
 
 #include <cmath>
+#include <iostream>
 
 using namespace minirt;
 
@@ -22,6 +23,10 @@ void initScene(Scene &scene) {
     scene.addLight(PointLight {{-15, 0, -15}, white});
     scene.addLight(PointLight {{1, 1, 0}, blue});
     scene.addLight(PointLight {{0, -10, 6}, red});
+
+    scene.setBackground({0.05, 0.05, 0.05});
+    scene.setAmbient({0.1, 0.1, 0.1});
+    scene.setRecursionLimit(50);
 }
 
 int main(int argc, char **argv) {
@@ -29,12 +34,14 @@ int main(int argc, char **argv) {
     int viewPlaneResolutionY = (argc > 2 ? std::stoi(argv[2]) : 600);
     int numOfSamples = (argc > 3 ? std::stoi(argv[3]) : 1);
     int numOfFrames = (argc > 4 ? std::stoi(argv[4]) : 1);
+    std::string sceneFile = (argc > 5 ? argv[5] : "");
 
     Scene scene;
-    scene.setBackground({0.05, 0.05, 0.05});
-    scene.setAmbient({0.1, 0.1, 0.1});
-    scene.setRecursionLimit(50);
-    initScene(scene);
+    if (sceneFile.empty()) {
+        initScene(scene);
+    } else {
+        scene.loadFromFile(sceneFile);
+    }
 
     const double backgroundSizeX = 4;
     const double backgroundSizeY = 4;
