@@ -31,10 +31,10 @@ private:
 
     // Camera's position.
     Point3D viewPoint {0, 0, 0};
-    // Unit basis vectors for camera.
+    // Unit basis vectors for camera (left-handed system).
     Vector3D unitX {1, 0, 0};
     Vector3D unitY {0, 1, 0};
-    Vector3D unitZ {0, 0, -1};
+    Vector3D unitZ {0, 0, 1};
 };
 
 }
