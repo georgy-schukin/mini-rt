@@ -59,4 +59,8 @@ Vector3D operator *(double c, const Vector3D &v) {
     return v * c;
 }
 
+Vector3D operator /(const Vector3D &v, double c) {
+    return v * (1.0 / c);
+}
+
 }

@@ -20,6 +20,11 @@ Material::Material(const Color &color, double diffuseCoeff, double specularCoeff
     diffuseColor(color * diffuseCoeff), specularColor(color * specularCoeff), shininess(shininess) {
 }
 
+void Material::makeTransparent(double refrCoeff, double refrIndex) {
+    refractionCoeff = refrCoeff;
+    refractionIndex = refrIndex;
+}
+
 Color Material::shade(const Color &lightColor, const Vector3D &normal, const Vector3D &reflected, const Vector3D &toLight, const Vector3D &toViewer) const {
     double diffuse = std::max(toLight.dot(normal), 0.0);
     double specular = 0.0;

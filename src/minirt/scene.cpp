@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <stdexcept>
 #include <fstream>
+#include <cmath>
 
 namespace minirt {
 
@@ -93,15 +94,19 @@ Color Scene::illumination(const Ray &ray, int recursionStep) const {
     }
     // Find an object for intersection.
     Point3D closestIntersectionPoint;
-    auto closestSphere = intersect(ray, closestIntersectionPoint);
-    if (!closestSphere) {
+    auto closestObject = intersect(ray, closestIntersectionPoint);
+    if (!closestObject) {
         return backgroundColor;
     }
 
+    const auto &sphere = *closestObject;
+    const auto &material = sphere.material;
+
     // Normal for the sphere and reflected ray.
-    Vector3D normal = closestSphere->normalTo(closestIntersectionPoint);    
+    Vector3D normal = closestObject->normalTo(closestIntersectionPoint);
     Vector3D toViewer = -ray.direction;
-    Vector3D reflected = 2 * normal.dot(toViewer) * normal - toViewer;
+    double cosThetaI = normal.dot(toViewer);
+    Vector3D reflected = 2 * cosThetaI * normal - toViewer;
 
     // Add ambient light.
     Color color = ambientLight;
@@ -123,14 +128,45 @@ Color Scene::illumination(const Ray &ray, int recursionStep) const {
         }
         if (!obstacle) {
             // Apply coefficients of the body color to the intensity of the light source.
-            color += closestSphere->material.shade(light.color, normal, reflected, toLight, toViewer);
+            color += material.shade(light.color, normal, reflected, toLight, toViewer);
         }
     }    
 
+    double refractionCoeff = material.refractionCoeff;
+    Vector3D refracted;
+    // Check for refraction.
+    if (refractionCoeff > 0) {
+        double nu = 1.0 / material.refractionIndex; // assume refraction index 1.0 for air
+        // Check if we hit object from inside.
+        if (cosThetaI < 0) {
+            nu = 1.0 /nu;
+            normal = -normal;
+            cosThetaI = -cosThetaI;
+        }
+        double cosThetaT = 1.0 - (1.0 - cosThetaI * cosThetaI) * (nu * nu);
+        // Check for total internal reflection (no refraction).
+        if (cosThetaT < 0) {
+            refractionCoeff = 0.0;
+        } else {
+            cosThetaT = std::sqrt(cosThetaT);
+            refracted = (cosThetaI * nu - cosThetaT) * normal - toViewer * nu;
+        }
+    }
+
+    // Add refraction.
+    if (refractionCoeff > 0) {
+        Ray refractedRay {closestIntersectionPoint, refracted.normalized()};
+        Color refractionColor = illumination(refractedRay, recursionStep + 1);
+        color += refractionCoeff * refractionColor;
+    }
+
     // Add reflection.
-    Ray reflectedRay {closestIntersectionPoint, reflected.normalized()};
-    Color reflectionColor = illumination(reflectedRay, recursionStep + 1);
-    color += closestSphere->material.specularColor * reflectionColor;
+    double reflectionCoeff = 1.0 - refractionCoeff;
+    if (reflectionCoeff > 0) {
+        Ray reflectedRay {closestIntersectionPoint, reflected.normalized()};
+        Color reflectionColor = illumination(reflectedRay, recursionStep + 1);
+        color += reflectionCoeff * material.specularColor * reflectionColor;
+    }
 
     return (color);
 }

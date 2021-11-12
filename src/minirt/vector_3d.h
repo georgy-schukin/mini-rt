@@ -26,5 +26,6 @@ Vector3D operator -(const Vector3D &v);
 Vector3D operator +(const Vector3D &v1, const Vector3D &v2);
 Vector3D operator *(const Vector3D &v, double c);
 Vector3D operator *(double c, const Vector3D &v);
+Vector3D operator /(const Vector3D &v, double c);
 
 }
