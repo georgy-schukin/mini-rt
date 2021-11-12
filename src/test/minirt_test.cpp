@@ -12,22 +12,22 @@ void initScene(Scene &scene) {
     Color white {0.8, 0.8, 0.8};
     Color yellow {1, 1, 0.2};
 
-    Material blueM {blue, 0.4, 0.6};
-    Material redShiny {red, white, 50};
-    Material whiteShiny {Color {0.2}, Color {0.8}, 100};
-    Material whiteMatte {Color {0.6}, Color {0.4}, 10};
-    Material yellowM {yellow, white};
-    Material greenM {green, green};
+    Material shinyBlue {blue, 0.4, 0.6};
+    Material metallicRed {red, white, 50};
+    Material mirrorBlack {Color {0.0}, Color {0.9}, 1000};
+    Material matteWhite {Color {0.7}, Color {0.3}, 1};
+    Material metallicYellow {yellow, white, 250};
+    Material greenishGreen {green, 0.5, 0.5};
 
-    scene.addSphere(Sphere {{0, -2, 7}, 1, blueM});
-    scene.addSphere(Sphere {{-3, 2, 11}, 2, redShiny});
-    scene.addSphere(Sphere {{0, 2, 8}, 1, greenM});
-    scene.addSphere(Sphere {{1.5, -0.5, 7}, 1, whiteShiny});
-    scene.addSphere(Sphere {{-2, -1, 6}, 0.7, yellowM});
-    scene.addSphere(Sphere {{2.2, 0.5, 9}, 1.2, whiteMatte});
-    scene.addSphere(Sphere {{4, -1, 10}, 0.7, redShiny});
+    scene.addSphere(Sphere {{0, -2, 7}, 1, shinyBlue});
+    scene.addSphere(Sphere {{-3, 2, 11}, 2, metallicRed});
+    scene.addSphere(Sphere {{0, 2, 8}, 1, greenishGreen});
+    scene.addSphere(Sphere {{1.5, -0.5, 7}, 1, mirrorBlack});
+    scene.addSphere(Sphere {{-2, -1, 6}, 0.7, metallicYellow});
+    scene.addSphere(Sphere {{2.2, 0.5, 9}, 1.2, matteWhite});
+    scene.addSphere(Sphere {{4, -1, 10}, 0.7, metallicRed});
 
-    scene.addLight(PointLight {{-15, 1, -15}, white});
+    scene.addLight(PointLight {{-15, 0, -15}, white});
     scene.addLight(PointLight {{1, 1, 0}, blue});
     scene.addLight(PointLight {{0, -10, 6}, red});
 

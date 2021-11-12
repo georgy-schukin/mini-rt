@@ -25,12 +25,13 @@ Color ViewPlane::computePixel(const Scene &scene, const Point3D &viewPoint, int 
         Sampler sampler;
         samples = sampler.sampleRandom(numOfSamples);
     }
+    const auto aspect = static_cast<double>(resolutionX) / resolutionY;
     for (const auto &sample: samples) {
-        double sx = double(x) + sample.x;
-        double sy = double(y) + sample.y;
+        const auto sx = static_cast<double>(x) + sample.x;
+        const auto sy = static_cast<double>(y) + sample.y;
         // A ray from the eye.
         Vector3D rayDirection {
-            sx * sizeX / resolutionX - sizeX / 2,
+            sx * sizeX * aspect / resolutionX - sizeX * aspect / 2,
             sy * sizeY / resolutionY - sizeY / 2,
             distance};
         color += scene.illumination(Ray {viewPoint, rayDirection.normalized()});
