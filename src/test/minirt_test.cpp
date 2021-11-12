@@ -35,7 +35,7 @@ void initScene(Scene &scene) {
     scene.addLight(PointLight {{1, 1, 0}, blue});
     scene.addLight(PointLight {{0, -10, 6}, red});
 
-    scene.setBackground({0.05, 0.05, 0.05});
+    scene.setBackground({0.05, 0.05, 0.08});
     scene.setAmbient({0.1, 0.1, 0.1});
     scene.setRecursionLimit(20);
 }
