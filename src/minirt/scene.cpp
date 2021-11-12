@@ -40,6 +40,9 @@ void Scene::loadFromFile(const std::string &filename) {
     while (!in.eof()) {
         std::string tag;
         in >> tag;
+        if (tag.empty()) {
+            continue;
+        }
         if (tag == "sphere") {
             double radius;
             in >> pos.x >> pos.y >> pos.z

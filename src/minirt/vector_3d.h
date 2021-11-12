@@ -17,6 +17,8 @@ struct Vector3D {
     Vector3D normalized() const;
 
     double dot(const Vector3D &v) const;
+
+    Vector3D cross(const Vector3D &v) const;
 };
 
 Vector3D operator -(const Vector3D &v1, const Vector3D &v2);

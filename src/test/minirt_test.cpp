@@ -61,19 +61,20 @@ int main(int argc, char **argv) {
     ViewPlane viewPlane {viewPlaneResolutionX, viewPlaneResolutionY,
                          viewPlaneSizeX, viewPlaneSizeY, viewPlaneDistance};
 
-    const double phi = 3.14159265358979323846;
+    const double pi = 3.14159265358979323846;
     const double radius = 20;
 
     // Compute specified number of frames.
     for (int n = 0; n < numOfFrames; n++) {
-        // Camera is rotating around (0, 0) origin.
-        const double angle = phi * double(n) / 360.0 + 3.0 * phi / 2.0;
+        // Camera is rotating around (0, 0, 0) origin.
+        const double angle = pi * double(n) / 360.0 + 3.0 * pi / 2.0;
         Point3D viewPoint {radius * std::cos(angle), 0, radius * std::sin(angle)};
+        viewPlane.setView(viewPoint, {0, 0, 0});
 
         Image image(viewPlaneResolutionX, viewPlaneResolutionY); // computed image
         for(int x = 0; x < viewPlaneResolutionX; x++)
         for(int y = 0; y < viewPlaneResolutionY; y++) {
-            const auto color = viewPlane.computePixel(scene, viewPoint, x, y, numOfSamples);
+            const auto color = viewPlane.computePixel(scene, x, y, numOfSamples);
             image.set(x, y, color);
         }
 

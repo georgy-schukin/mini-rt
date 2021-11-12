@@ -13,8 +13,20 @@ ViewPlane::ViewPlane(int resolutionX, int resolutionY, double sizeX, double size
     sizeX(sizeX), sizeY(sizeY), distance(distance) {
 }
 
+void ViewPlane::setViewPoint(const Point3D &eye) {
+    viewPoint = eye;
+}
+
+void ViewPlane::setView(const Point3D &eye, const Point3D &lookAt, const Vector3D &up) {
+    viewPoint = eye;
+    // Set up left-handed coordinate system for camera.
+    unitZ = (lookAt - eye).normalized();
+    unitX = up.cross(unitZ).normalized();
+    unitY = unitZ.cross(unitX);
+}
+
 // Compute color for the pixel with the given index.
-Color ViewPlane::computePixel(const Scene &scene, const Point3D &viewPoint, int x, int y, int numOfSamples) {
+Color ViewPlane::computePixel(const Scene &scene, int x, int y, int numOfSamples) {
     Color color;
     std::vector<Sample2D> samples;
     if (numOfSamples == 1) {
@@ -30,10 +42,10 @@ Color ViewPlane::computePixel(const Scene &scene, const Point3D &viewPoint, int 
         const auto sx = static_cast<double>(x) + sample.x;
         const auto sy = static_cast<double>(y) + sample.y;
         // A ray from the eye.
-        Vector3D rayDirection {
-            sx * sizeX * aspect / resolutionX - sizeX * aspect / 2,
-            sy * sizeY / resolutionY - sizeY / 2,
-            distance};
+        const auto dx = sx * sizeX * aspect / resolutionX - sizeX * aspect / 2;
+        const auto dy = sy * sizeY / resolutionY - sizeY / 2;
+        const auto dz = distance;
+        Vector3D rayDirection = unitX * dx + unitY * dy + unitZ * dz;
         color += scene.illumination(Ray {viewPoint, rayDirection.normalized()});
     }
     return (color / numOfSamples).clamp();
