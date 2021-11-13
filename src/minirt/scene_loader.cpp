@@ -11,7 +11,6 @@ void SceneLoader::loadSceneFromFile(const std::string &filename, Scene &scene) {
     if (!in.is_open()) {
         throw std::runtime_error("Cannot open " + filename);
     }
-    std::map<std::string, Material> materials;
     while (!in.eof()) {
         std::string tag;
         in >> tag;
@@ -24,7 +23,7 @@ void SceneLoader::loadSceneFromFile(const std::string &filename, Scene &scene) {
         } else if (tag == "light") {
             const auto light = loadLight(in);
             scene.addLight(light);
-        } else if (tag == "material") {
+        } else if (tag == "mat" || tag == "material") {
             std::string materialName;
             in >> materialName;
             materials[materialName] = loadMaterial(in);
@@ -57,11 +56,11 @@ Sphere SceneLoader::loadSphere(std::ifstream &in) {
         if (tag.empty()) {
             continue;
         }
-        if (tag == "pos") {
+        if (tag == "pos" || tag == "position") {
             in >> pos;
-        } else if (tag == "radius") {
+        } else if (tag == "rad" || tag == "radius") {
             in >> radius;
-        } else if (tag == "material") {
+        } else if (tag == "mat" || tag == "material") {
             std::string materialName;
             in >> materialName;
             auto it = materials.find(materialName);
@@ -104,7 +103,7 @@ PointLight SceneLoader::loadLight(std::ifstream &in) {
         if (tag.empty()) {
             continue;
         }
-        if (tag == "pos") {
+        if (tag == "pos" || tag == "position") {
             in >> pos;
         } else if (tag == "color") {
             in >> color;
