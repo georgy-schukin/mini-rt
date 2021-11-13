@@ -1,5 +1,5 @@
-add_executable(minirt_test minirt_test.cpp)
+add_executable(minirt-test minirt_test.cpp)
 
-target_link_libraries(minirt_test PUBLIC minirt)
+target_link_libraries(minirt-test PUBLIC minirt)
 
-#install(TARGETS minirt_test DESTINATION bin/minirt)
+#install(TARGETS minirt-test DESTINATION bin/minirt)
