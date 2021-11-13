@@ -63,4 +63,8 @@ Vector3D operator /(const Vector3D &v, double c) {
     return v * (1.0 / c);
 }
 
+std::istream& operator >> (std::istream &in, Vector3D &v) {
+    return in >> v.x >> v.y >> v.z;
+}
+
 }

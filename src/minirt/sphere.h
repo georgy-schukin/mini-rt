@@ -16,6 +16,7 @@ public:
     // Check intersection with the sphere.
     bool intersect(const Ray &ray, double &distance) const;
 
+    // Outward normal to the sphere in the surface point.
     Vector3D normalTo(const Point3D &surfacePoint) const;
 
 public:

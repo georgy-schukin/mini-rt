@@ -17,7 +17,7 @@ public:
     // Compute color for the pixel with the given index.
     Color computePixel(const Scene &scene, int x, int y, int numOfSamples = 1);
 
-    // Set only camera's position.
+    // Set camera's position only.
     void setViewPoint(const Point3D &eye);
     // Set camera's position and orientation: camera is located at eye and looks at lookAt.
     void setView(const Point3D &eye, const Point3D &lookAt, const Vector3D &up = {0, 1, 0});

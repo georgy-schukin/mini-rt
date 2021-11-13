@@ -8,6 +8,7 @@
 #include "ray.h"
 #include "sampler.h"
 #include "scene.h"
+#include "scene_loader.h"
 #include "sphere.h"
 #include "vector_3d.h"
 #include "view_plane.h"

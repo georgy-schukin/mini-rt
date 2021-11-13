@@ -28,7 +28,7 @@ public:
     const Sphere* intersect(const Ray &ray, Point3D &closestIntersectionPoint) const;
 
     // Compute color for this ray in the scene.
-    Color illumination(const Ray &ray, int recursionStep = 0) const;
+    Color illumination(const Ray &ray, int recursionStep = 0) const;    
 
 private:
     std::vector<Sphere> spheres;

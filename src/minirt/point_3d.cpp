@@ -26,4 +26,8 @@ Point3D operator -(const Point3D &p, const Vector3D &v) {
     return Point3D {p.x - v.x, p.y - v.y, p.z - v.z};
 }
 
+std::istream& operator >> (std::istream &in, Point3D &p) {
+    return in >> p.x >> p.y >> p.z;
+}
+
 }

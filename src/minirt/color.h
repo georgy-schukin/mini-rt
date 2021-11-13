@@ -1,5 +1,7 @@
 #pragma once
 
+#include <istream>
+
 namespace minirt {
 
 struct Color {
@@ -22,5 +24,7 @@ Color operator *(const Color &c1, const Color &c2);
 Color operator *(const Color &c, double coeff);
 Color operator *(double coeff, const Color &c);
 Color operator /(const Color &c, double coeff);
+
+std::istream& operator >> (std::istream &in, Color &c);
 
 }

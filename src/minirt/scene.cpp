@@ -1,11 +1,13 @@
 #include "scene.h"
 #include "ray.h"
+#include "scene_loader.h"
 
 #include <limits>
 #include <algorithm>
 #include <stdexcept>
 #include <fstream>
 #include <cmath>
+#include <map>
 
 namespace minirt {
 
@@ -32,42 +34,8 @@ void Scene::setRecursionLimit(int limit) {
 }
 
 void Scene::loadFromFile(const std::string &filename) {
-    std::ifstream in(filename);
-    if (!in.is_open()) {
-        throw std::runtime_error("Cannot open " + filename);
-    }
-    Point3D pos;
-    Color color;
-    while (!in.eof()) {
-        std::string tag;
-        in >> tag;
-        if (tag.empty()) {
-            continue;
-        }
-        if (tag == "sphere") {
-            double radius;
-            in >> pos.x >> pos.y >> pos.z
-                >> radius
-                >> color.red >> color.green >> color.blue;
-            addSphere(Sphere {pos, radius, color});
-        } else if (tag == "light") {
-            in >> pos.x >> pos.y >> pos.z
-                >> color.red >> color.green >> color.blue;
-            addLight(PointLight {pos, color});
-        } else if (tag == "ambient") {
-            in >> color.red >> color.green >> color.blue;
-            setAmbient(color);
-        } else if (tag == "background") {
-            in >> color.red >> color.green >> color.blue;
-            setBackground(color);
-        } else if (tag == "recursion") {
-            int limit;
-            in >> limit;
-            setRecursionLimit(limit);
-        } else {
-            throw std::runtime_error("Unknown tag: " + tag);
-        }
-    }
+    SceneLoader loader;
+    loader.loadSceneFromFile(filename, *this);
 }
 
 // Returns closest object if there is an intersection or nullptr otherwise.

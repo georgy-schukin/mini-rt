@@ -53,4 +53,8 @@ Color operator /(const Color &c, double coeff) {
     return c * (1.0 / coeff);
 }
 
+std::istream& operator >> (std::istream &in, Color &c) {
+    return in >> c.red >> c.green >> c.blue;
+}
+
 }

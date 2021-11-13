@@ -26,6 +26,7 @@ SOURCES +=  \
     ray.cpp \
     sampler.cpp \
     scene.cpp \
+    scene_loader.cpp \
     sphere.cpp \
     vector_3d.cpp \
     view_plane.cpp
@@ -41,6 +42,7 @@ HEADERS += didal.h  \
     ray.h \
     sampler.h \
     scene.h \
+    scene_loader.h \
     sphere.h \
     vector_3d.h \
     view_plane.h
