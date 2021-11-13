@@ -12,10 +12,6 @@ Very simple ray tracer
 - Saving result in JPEG
 - Loading scene from file
 
-# Contents
-
-1. [Manual](doc/Manual.md)
-
 # Installation
 
 ## With CMake
@@ -33,11 +29,7 @@ make install
 
 Just build included Qt project in `src`.
 
-# Usage
-
-```
-#include "minirt/minirt.h"
-```
+# [Documentation](doc/Manual.md)
 
 # Examples
 
