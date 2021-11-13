@@ -1,11 +1,20 @@
-# mini-rt
+# Mini-Rt
 Very simple ray tracer
 
 ![raytracing result](doc/raytracing.jpg)
 
+# Features
+
+- Objects: spheres
+- Lights: point lights
+- Phong shading
+- Reflection and refraction (transparency)
+- Saving result in JPEG
+- Loading scene from file
+
 # Installation
 
-## CMake
+## With CMake
 
 ```
 git clone ...
@@ -16,6 +25,10 @@ make
 make install
 ```
 
+## With Qt
+
+Just build included Qt project in `src`.
+
 # Usage
 
 ```
@@ -24,6 +37,8 @@ make install
 
 # Examples
 
-Directory `src/test` contains example program which renders a sample scene.
+Directory `src/test` contains example program which renders a sample scene or scene from a file.
+
+Examples of scene files are in `scenes` directory.
 
 Enjoy!
