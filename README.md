@@ -3,7 +3,7 @@ Very simple ray tracer
 
 ![raytracing result](doc/raytracing.jpg)
 
-# Features
+## Features
 
 - Objects: spheres
 - Lights: point lights
@@ -12,9 +12,9 @@ Very simple ray tracer
 - Saving result in JPEG
 - Loading scene from file
 
-# Installation
+## Installation
 
-## With CMake
+### With CMake
 
 ```
 git clone ...
@@ -25,13 +25,13 @@ make
 make install
 ```
 
-## With Qt
+### With Qt
 
 Just build included Qt project in `src`.
 
-# [Documentation](doc/Manual.md)
+## [Documentation](doc/Manual.md)
 
-# Examples
+## Examples
 
 Directory `src/test` contains example program which renders a sample scene or scene from a file.
 

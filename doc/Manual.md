@@ -1,8 +1,10 @@
-# Starting using Mini-Rt
+# Mini-Rt manual
+
+## Starting using Mini-Rt
 
     #include "minirt/minirt.h"
 
-# Creating materials
+## Creating materials
 
 The same color for diffuse and specular:
 
@@ -17,11 +19,11 @@ Making material transparent by setting refraction amount (0 - min, 1 - max) and 
     Material m3 {Color {0.2}};
     m3.makeTransparent(0.9, 1.33);
 
-# Creating objects
+## Creating objects
 
-# Creating lights
+## Creating lights
 
-# Setting up a scene
+## Setting up a scene
 
 Scene object contains all information:
 
@@ -47,7 +49,7 @@ Setting maximum depth of recursion for computing reflection and refraction:
 
     scene.setRecursionLimit(10);
 
-# Setting up a camera (view)
+## Setting up a camera (view)
 
 First you need to create a view plane:
 
@@ -72,7 +74,7 @@ Or change camera position and orientation too:
 Here the camera will be located at viewPoint and looking at lookAt. 
 The third optional parameter for setView is 'up' direction (positive Y axis, i.e. (0, 1, 0), by default).
 
-# Rendering a pixel
+## Rendering a pixel
 
     Color color = plane.computePixel(scene, x, y, numberOfSamples);
 
@@ -81,7 +83,7 @@ numberOfSamples parameter specifies how many samples to do for the pixel.
 With default value 1 center of the pixel will be used to trace a ray, 
 otherwise specified number of random positions within the pixel will be used.
 
-# Rendering an image
+## Rendering an image
 
 To store a rendered image let's create it first:
 
@@ -93,7 +95,7 @@ Here is the main loop for rendering the image:
         for (int y = 0; y < height; y++)
             image.set(x, y, plane.computePixel(scene, x, y, numberOfSamples));
 
-# Saving a result
+## Saving a result
 You can save a result as JPEG file:
 
     image.saveJPEG("result.jpg", quality);
