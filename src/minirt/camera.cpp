@@ -1,5 +1,7 @@
 #include "camera.h"
 
+#include <cmath>
+
 namespace minirt {
 
 Camera::Camera() {}
@@ -33,17 +35,19 @@ Ray Camera::rayFrom(double dx, double dy, double dz) const {
     return Ray {viewPoint, rayDirection.normalized()};
 }
 
-void Camera::rotateAround(double radians, const Point3D &point) {
-
+void Camera::rotateAroundTarget(double degrees) {
+    const auto pi = 3.14159265359;
+    const auto dir = viewPoint - target;
+    const auto radius = std::sqrt(dir.x * dir.x + dir.z * dir.z);
+    const auto angle = std::atan2(dir.z, dir.x);
+    const auto newAngle = angle + pi * degrees / 180.0;
+    Point3D newViewPoint {target.x + radius * std::cos(newAngle), viewPoint.y, target.z + radius * std::sin(newAngle)};
+    set(newViewPoint, target, unitY);
 }
 
-void Camera::rotateAroundTarget(double radians) {
-    rotateAround(radians, target);
-}
-
-Camera Camera::rotatedAroundTarget(double radians) const {
+Camera Camera::rotatedAroundTarget(double degrees) const {
     auto newCamera = *this;
-    newCamera.rotateAroundTarget(radians);
+    newCamera.rotateAroundTarget(degrees);
     return newCamera;
 }
 

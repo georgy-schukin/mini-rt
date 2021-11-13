@@ -21,9 +21,9 @@ public:
     // Shoot ray from the camera's view point, using provided scales for the camera's axes.
     Ray rayFrom(double dx, double dy, double dz) const;
 
-    void rotateAround(double radians, const Point3D &point);
-    void rotateAroundTarget(double radians);
-    Camera rotatedAroundTarget(double radians) const;
+    // Rotate camera aroung target on a given amount in degrees.
+    void rotateAroundTarget(double degrees);
+    Camera rotatedAroundTarget(double degrees) const;
 
     const Point3D& getViewPoint() const;
     const Point3D& getTarget() const;
@@ -34,7 +34,7 @@ public:
 
 private:
     // Camera's position.
-    Point3D viewPoint {0, 0, -10};
+    Point3D viewPoint {0, 0, -20};
     // Look a target.
     Point3D target {0, 0, 0};
     // Unit basis vectors for camera (left-handed system).
