@@ -12,6 +12,10 @@ Very simple ray tracer
 - Saving result in JPEG
 - Loading scene from file
 
+# Contents
+
+1. [Manual](doc/Manual.md)
+
 # Installation
 
 ## With CMake
