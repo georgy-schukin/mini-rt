@@ -23,6 +23,9 @@ void SceneLoader::loadSceneFromFile(const std::string &filename, Scene &scene) {
         } else if (tag == "light") {
             const auto light = loadLight(in);
             scene.addLight(light);
+        } else if (tag == "camera") {
+            const auto camera = loadCamera(in);
+            scene.setCamera(camera);
         } else if (tag == "mat" || tag == "material") {
             std::string materialName;
             in >> materialName;
@@ -149,6 +152,31 @@ Material SceneLoader::loadMaterial(std::ifstream &in) {
         }
     }
     return material;
+}
+
+Camera SceneLoader::loadCamera(std::ifstream &in) {
+    Point3D viewPoint;
+    Point3D target {0};
+    Vector3D up {0, 1, 0};
+    while (!in.eof()) {
+        std::string tag;
+        in >> tag;
+        if (tag.empty()) {
+            continue;
+        }
+        if (tag == "pos" || tag == "position") {
+            in >> viewPoint;
+        } else if (tag == "target") {
+            in >> target;
+        } else if (tag == "up") {
+            in >> up;
+        } else if (tag == "end") {
+            break;
+        } else {
+            throw std::runtime_error("Unknown camera parameter: " + tag);
+        }
+    }
+    return Camera {viewPoint, target, up};
 }
 
 }

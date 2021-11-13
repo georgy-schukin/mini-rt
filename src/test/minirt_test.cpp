@@ -38,6 +38,8 @@ void initScene(Scene &scene) {
     scene.setBackground({0.05, 0.05, 0.08});
     scene.setAmbient({0.1, 0.1, 0.1});
     scene.setRecursionLimit(20);
+
+    scene.setCamera(Camera {{0, 0, -20}, {0, 0, 0}});
 }
 
 int main(int argc, char **argv) {
@@ -65,16 +67,8 @@ int main(int argc, char **argv) {
     ViewPlane viewPlane {viewPlaneResolutionX, viewPlaneResolutionY,
                          viewPlaneSizeX, viewPlaneSizeY, viewPlaneDistance};
 
-    const double pi = 3.14159265358979323846;
-    const double radius = 20;
-
     // Compute specified number of frames.
-    for (int n = 0; n < numOfFrames; n++) {
-        // Camera is rotating around (0, 0, 0) origin.
-        const double angle = pi * double(n) / 360.0 + 3.0 * pi / 2.0;
-        Point3D viewPoint {radius * std::cos(angle), 0, radius * std::sin(angle)};
-        viewPlane.setView(viewPoint, {0, 0, 0});
-
+    for (int n = 0; n < numOfFrames; n++) {                
         Image image(viewPlaneResolutionX, viewPlaneResolutionY); // computed image
         for(int x = 0; x < viewPlaneResolutionX; x++)
         for(int y = 0; y < viewPlaneResolutionY; y++) {
@@ -83,6 +77,9 @@ int main(int argc, char **argv) {
         }
 
         image.saveJPEG("raytracing_" + std::to_string(n) + ".jpg");
+
+        // For a new frame rotate camera on 1 degree around camera's target.
+        scene.setCamera(scene.getCamera().rotatedAroundTarget(1));
     }
 
     return 0;

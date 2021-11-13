@@ -33,6 +33,14 @@ void Scene::setRecursionLimit(int limit) {
     limitOfRecursion = limit;
 }
 
+void Scene::setCamera(const Camera &camera) {
+    this->camera = camera;
+}
+
+const Camera& Scene::getCamera() const {
+    return camera;
+}
+
 void Scene::loadFromFile(const std::string &filename) {
     SceneLoader loader;
     loader.loadSceneFromFile(filename, *this);

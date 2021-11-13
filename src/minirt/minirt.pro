@@ -17,6 +17,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES +=  \
+    camera.cpp \
     color.cpp \
     image.cpp \
     jpge.cpp \
@@ -32,6 +33,7 @@ SOURCES +=  \
     view_plane.cpp
 
 HEADERS += didal.h  \
+    camera.h \
     color.h \
     image.h \
     jpge.h \

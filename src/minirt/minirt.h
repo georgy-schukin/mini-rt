@@ -1,5 +1,6 @@
 #pragma once
 
+#include "camera.h"
 #include "color.h"
 #include "image.h"
 #include "material.h"

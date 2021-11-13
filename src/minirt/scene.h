@@ -3,6 +3,7 @@
 #include "sphere.h"
 #include "point_light.h"
 #include "color.h"
+#include "camera.h"
 
 #include <vector>
 #include <string>
@@ -16,11 +17,14 @@ public:
     Scene();
 
     void addSphere(const Sphere &sphere);
-    void addLight(const PointLight &light);
+    void addLight(const PointLight &light);        
 
     void setAmbient(const Color &color);
     void setBackground(const Color &color);
     void setRecursionLimit(int limit);
+
+    void setCamera(const Camera &camera);
+    const Camera& getCamera() const;
 
     void loadFromFile(const std::string &filename);
 
@@ -32,12 +36,14 @@ public:
 
 private:
     std::vector<Sphere> spheres;
-    std::vector<PointLight> lights;
+    std::vector<PointLight> lights;        
 
     Color ambientLight {0.1, 0.1, 0.1};
     Color backgroundColor {0};
 
     int limitOfRecursion {1};
+
+    Camera camera;
 };
 
 }
