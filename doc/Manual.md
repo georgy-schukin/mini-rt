@@ -23,12 +23,13 @@ Different colors for diffuse and specular, with a shininess parameter:
     double shininess = 50;
     Material m2 {diffuse, specular, shininess};
 
-A material can be made transparent by setting refraction amount (from 0 to 1, 1 - max transparency) and refraction index:
+A material can be made transparent by setting refraction amount (from 0 to 1; 0 - no transparency, max reflection, 1 - max transparency, no reflection) and refraction index 
+(setting it above or below 1 can lead to different effects):
 
     Material m3 {Color {0.2}};
-    double refractionCoeff = 0.9;
+    double refractionAmount = 0.9;
     double refractionIndex = 1.33;
-    m3.makeTransparent(refractionCoeff, refractionIndex);
+    m3.makeTransparent(refractionAmount, refractionIndex);
 
 ## Creating objects
 
@@ -68,6 +69,14 @@ Setting maximum depth of recursion for computing reflection and refraction:
 
     scene.setRecursionLimit(10);
 
+### Scene files
+
+To load scene from a file:
+    
+    scene.loadFromFile("scene.txt");
+
+[Scene file format documentation](Script.md).
+
 ## Setting up a camera
 
 A scene is rendered as if looked on from a camera.
@@ -96,14 +105,6 @@ Or change position only
 To set camera for the scene:
 
     scene.setCamera(camera);
-
-### Scene files
-
-To load scene from a file:
-    
-    scene.loadFromFile("scene.txt");
-
-[Scene file format documentation](Script.md).
 
 ## Setting up a view (image) plane
 
