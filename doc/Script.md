@@ -1,4 +1,4 @@
-# Scene files format
+# Scene file format
 
 A scene file is a text file, describing a scene.
 It contains statements for materials, objects, lights, camera, etc.
@@ -38,10 +38,8 @@ A sphere is added with:
 Parameters are:
 
 - `position x y z`: sphere's position
-- `radius value`: sphere's radius
+- `radius value`: sphere's radius (1 by default)
 - `material materialName`: sphere's material
-
-You can also specify the same parameters as for material right away. 
 
 Example:
 
@@ -49,6 +47,15 @@ Example:
         position 10 -2 0
         radius 0.5
         material shinyRed
+    end
+
+You can also specify the same parameters as for material right away. In that case you may not specify material separately:
+
+    sphere 
+        position 5 5 3
+        radius 1
+        diffuse 0.5 0 0.2
+        specular 0.5 0.5 0.4
     end
 
 ## Lights
