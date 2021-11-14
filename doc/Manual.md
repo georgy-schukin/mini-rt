@@ -93,23 +93,37 @@ Or change position only
     
     camera.setViewPoint(viewPoint);
 
+To set camera for the scene:
+
+    scene.setCamera(camera);
+
+### Scene files
+
+To load scene from a file:
+    
+    scene.loadFromFile("scene.txt");
+
+[Scene file format documentation](Script.md).
+
 ## Setting up a view (image) plane
 
+View (image) plane is what a camera 'sees' and what will be rendered. 
 To create a view plane:
 
     ViewPlane plane {resolutionX, resolutionY, sizeX, sizeY, distance};
 
-Here resolutionX and resolutionY are resolution in pixels by X (width) and Y (height) respectively, for example, 1920x1080.
-sizeX and sizeY are plane width and height in world coordinates, distance - distance from a camera in world coordinates.
+Here `resolutionX` and `resolutionY` are resolution in pixels by X (width) and Y (height) respectively, for example, 1920x1080.
+`sizeX` and `sizeY` are plane width and height in world coordinates, `distance` - distance from a camera in world coordinates.
 
 ## Rendering a pixel
 
     Color color = plane.computePixel(scene, x, y, numberOfSamples);
 
 This computes color for the pixel with an index (x, y), counting from the bottom left corner of the image.
-numberOfSamples parameter specifies how many samples to do for the pixel. 
+`numberOfSamples` parameter specifies how many samples to do for the pixel.
 With default value 1 center of the pixel will be used to trace a ray, 
 otherwise specified number of random positions within the pixel will be used.
+More samples generally produces a better result (anti-aliasing).
 
 ## Rendering an image
 
@@ -124,8 +138,9 @@ Here is the main loop for rendering the image:
             image.set(x, y, plane.computePixel(scene, x, y, numberOfSamples));
 
 ## Saving a result
-You can save a result as JPEG file:
+
+A rendered image can be saved as a JPEG file:
 
     image.saveJPEG("result.jpg", quality);
 
-quality is a value from 1 to 100 which controls the saved image's quality. By default quallity = 90.
+`quality` is a value from 1 to 100 which controls the amount of compression and may affect image's quality. By default `quality` = 90.
