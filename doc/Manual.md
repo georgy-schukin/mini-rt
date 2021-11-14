@@ -1,31 +1,50 @@
 # Mini-Rt manual
 
-## Starting using Mini-Rt
+## Starting using the library 
 
     #include "minirt/minirt.h"
+    using namespace minirt;
 
 ## Creating materials
 
+A material contains diffuse and specular colors for Phong shading.
+Specular color is used in computing reflection and highlights, 
+shininess parameter controls highlights' size.
+
 The same color for diffuse and specular:
 
-    Material m1 {Color {1, 0, 0}};
+    Color color {1, 0, 0};
+    Material m1 {color};
 
-Different colors for diffuse and specular, with a shininess value:
+Different colors for diffuse and specular, with a shininess parameter:
 
-    Material m2 {Color {0.2, 0, 0}, Color {0.8, 0.5, 0.5}, 50};
+    Color diffuse {0.2, 0.2, 0};
+    Color specular {0.8, 0.5, 0.5};
+    double shininess = 50;
+    Material m2 {diffuse, specular, shininess};
 
-Making material transparent by setting refraction amount (0 - min, 1 - max) and refraction index:
+A material can be made transparent by setting refraction amount (from 0 to 1, 1 - max transparency) and refraction index:
 
     Material m3 {Color {0.2}};
-    m3.makeTransparent(0.9, 1.33);
+    double refractionCoeff = 0.9;
+    double refractionIndex = 1.33;
+    m3.makeTransparent(refractionCoeff, refractionIndex);
 
 ## Creating objects
 
+    Sphere sphere {position, radius, material};
+
 ## Creating lights
+
+Point light has a position in space and a color.
+
+    Point3D position {10, 0, 10};
+    Color color {0.9, 0, 0.9};
+    PointLight light {position, color};
 
 ## Setting up a scene
 
-Scene object contains all information:
+Scene is a collection of objects and lights:
 
     Scene scene;
 
@@ -49,30 +68,39 @@ Setting maximum depth of recursion for computing reflection and refraction:
 
     scene.setRecursionLimit(10);
 
-## Setting up a camera (view)
+## Setting up a camera
 
-First you need to create a view plane:
+A scene is rendered as if looked on from a camera.
+
+    Camera camera;
+
+The camera has position and orientation in the world (scene) space.
+By default the camera is located at (0, 0, -20) and looks at (0, 0, 0), 
+the camera's 'up' direction is (0, 1, 0) in world coordinates.
+You can set camera's position and orientation during creation 
+(the third optional parameter is 'up' direction in the world and is (0, 1, 0) by default):
+
+    Point3D viewPoint {10, 0, -10};
+    Point3D target {0, 0, 1};
+    Camera camera {viewPoint, target};
+
+You can also change position and orientation later:
+    
+    camera.set(viewPoint, target);
+
+Or change position only 
+(orientation doesn't change, but target changes accordingly):
+    
+    camera.setViewPoint(viewPoint);
+
+## Setting up a view (image) plane
+
+To create a view plane:
 
     ViewPlane plane {resolutionX, resolutionY, sizeX, sizeY, distance};
 
 Here resolutionX and resolutionY are resolution in pixels by X (width) and Y (height) respectively, for example, 1920x1080.
 sizeX and sizeY are plane width and height in world coordinates, distance - distance from a camera in world coordinates.
-
-By default a camera for the view plane is located in the origin (0, 0, 0) and oriented towards positive Z axis, 
-with positive Y axis pointing up and positive X axis - to the right.
-
-You can change default camera position:
-
-    plane.setViewPoint(Point3D {10, 0, 10});
-
-Or change camera position and orientation too:
-
-    Point3D viewPoint {10, 2, 10};
-    Point3D lookAt {0, 0, 0};
-    plane.setView(viewPoint, lookAt);
-
-Here the camera will be located at viewPoint and looking at lookAt. 
-The third optional parameter for setView is 'up' direction (positive Y axis, i.e. (0, 1, 0), by default).
 
 ## Rendering a pixel
 
