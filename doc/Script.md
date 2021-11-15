@@ -110,3 +110,5 @@ Example:
     background 0.1 0.1 0.2
     ambient 0.05 0.05 0.05
     recursion 10
+
+## [Scene file example](../scenes/default.txt)

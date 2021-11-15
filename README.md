@@ -1,5 +1,5 @@
 # Mini-Rt
-Very simple ray tracer
+Very simple ray tracing library
 
 ![raytracing result](doc/raytracing.jpg)
 
@@ -33,8 +33,8 @@ Just build included Qt project in `src`.
 
 ## Examples
 
-Directory `src/test` contains example program which renders a sample scene or scene from a file.
+Directory `src/test` contains [example program](src/test/minirt_test.cpp) which renders a sample scene or scene from a file.
 
-Examples of scene files are in `scenes` directory.
+Examples of [scene files](doc/Script.md) are in `scenes` directory.
 
 Enjoy!
