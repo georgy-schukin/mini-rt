@@ -12,12 +12,24 @@ Image::Image(int width, int height) :
     data.resize(width * height);
 }
 
+Color* Image::getData() {
+    return data.data();
+}
+
+const Color* Image::getData() const {
+    return data.data();
+}
+
 int Image::getWidth() const {
     return width;
 }
 
 int Image::getHeight() const {
     return height;
+}
+
+int Image::getNumOfPixels() const {
+    return width * height;
 }
 
 void Image::set(int x, int y, const Color &color) {

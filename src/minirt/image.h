@@ -12,8 +12,13 @@ public:
     Image();
     Image(int width, int height);
 
+    Color* getData();
+    const Color* getData() const;
+
     int getWidth() const;
     int getHeight() const;
+
+    int getNumOfPixels() const;
 
     void set(int x, int y, const Color &color);
     const Color& get(int x, int y) const;
