@@ -45,8 +45,8 @@ void Image::saveJPEG(const std::string &filename, int quality) {
     for(int x = 0; x < width; x++)
     for(int y = 0; y < height; y++) {
         const auto &color = get(x, y);
-        // Write image by rows: Z is row number, X - column number.
-        // Z index in array goes from the bottom of the image - need to flip the image by Z.
+        // Write image by rows: y is row number, x - column number.
+        // Y index in array goes from the bottom of the image - we need to flip the image by Y.
         const int dIndex = ((height - y - 1) * width + x) * 3;
         imgData[dIndex] = static_cast<jpge::uint8>(255 * color.red);
         imgData[dIndex + 1] = static_cast<jpge::uint8>(255 * color.green);
