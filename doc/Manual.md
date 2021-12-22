@@ -132,11 +132,27 @@ To store a rendered image let's create it first:
 
     Image image {width, height};
 
+Here `width` is image size by X (number of columns), `height` - image size by Y (number of rows).
+
 Here is the main loop for rendering the image:
 
     for (int x = 0; x < width; x++)
         for (int y = 0; y < height; y++)
             image.set(x, y, plane.computePixel(scene, x, y, numberOfSamples));
+
+Image can be set or get pixel by pixel:
+
+    image.set(x, y, color);
+    Color pixelColor = image.get(x, y);
+
+Here `x` is a pixel's coordinate by X (width), `y` - by Y (height). 
+These coordinates are measured from the bottom left corner of the image (to match view plane's coordinate system).
+
+To access the whole image data as array of pixels:
+
+    auto *data = image.getData();
+
+Pixels are stored by columns, starting from the bottom left corner of the image.
 
 ## Saving a result
 
