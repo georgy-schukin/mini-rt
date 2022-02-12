@@ -1,8 +1,27 @@
 #include "scene_loader.h"
 
 #include <stdexcept>
+#include <string>
+#include <algorithm>
 
 namespace minirt {
+
+namespace {
+
+std::string toLower(const std::string &str) {
+    std::string newStr = str;
+    std::transform(str.begin(), str.end(), newStr.begin(),
+        [](unsigned char c){ return std::tolower(c); });
+    return newStr;
+}
+
+std::string nextTag(std::istream &in) {
+    std::string tag;
+    in >> tag;
+    return toLower(tag);
+}
+
+}
 
 SceneLoader::SceneLoader() {}
 
@@ -12,8 +31,7 @@ void SceneLoader::loadSceneFromFile(const std::string &filename, Scene &scene) {
         throw std::runtime_error("Cannot open " + filename);
     }
     while (!in.eof()) {
-        std::string tag;
-        in >> tag;
+        const auto tag = nextTag(in);
         if (tag.empty()) {
             continue;
         }
@@ -54,8 +72,7 @@ Sphere SceneLoader::loadSphere(std::ifstream &in) {
     Material material {Color {1.0}};
     Color color;
     while (!in.eof()) {
-        std::string tag;
-        in >> tag;
+        const auto tag = nextTag(in);
         if (tag.empty()) {
             continue;
         }
@@ -101,8 +118,7 @@ PointLight SceneLoader::loadLight(std::ifstream &in) {
     Point3D pos {0};
     Color color;
     while (!in.eof()) {
-        std::string tag;
-        in >> tag;
+        const auto tag = nextTag(in);
         if (tag.empty()) {
             continue;
         }
@@ -123,8 +139,7 @@ Material SceneLoader::loadMaterial(std::ifstream &in) {
     Material material {Color {1.0}};
     Color color;
     while (!in.eof()) {
-        std::string tag;
-        in >> tag;
+        const auto tag = nextTag(in);
         if (tag.empty()) {
             continue;
         }
@@ -159,8 +174,7 @@ Camera SceneLoader::loadCamera(std::ifstream &in) {
     Point3D target {0};
     Vector3D up {0, 1, 0};
     while (!in.eof()) {
-        std::string tag;
-        in >> tag;
+        const auto tag = nextTag(in);
         if (tag.empty()) {
             continue;
         }
