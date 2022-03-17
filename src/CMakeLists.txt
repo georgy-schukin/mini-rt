@@ -4,3 +4,4 @@ project(MINIRT CXX)
 
 add_subdirectory(minirt)
 add_subdirectory(test)
+add_subdirectory(test_anim)

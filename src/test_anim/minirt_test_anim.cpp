@@ -45,8 +45,9 @@ void initScene(Scene &scene) {
 int main(int argc, char **argv) {
     int viewPlaneResolutionX = (argc > 1 ? std::stoi(argv[1]) : 600);
     int viewPlaneResolutionY = (argc > 2 ? std::stoi(argv[2]) : 600);
-    int numOfSamples = (argc > 3 ? std::stoi(argv[3]) : 1);    
-    std::string sceneFile = (argc > 4 ? argv[4] : "");
+    int numOfSamples = (argc > 3 ? std::stoi(argv[3]) : 1);
+    int numOfFrames = (argc > 4 ? std::stoi(argv[4]) : 1);
+    std::string sceneFile = (argc > 5 ? argv[5] : "");
 
     Scene scene;
     if (sceneFile.empty()) {
@@ -66,14 +67,20 @@ int main(int argc, char **argv) {
     ViewPlane viewPlane {viewPlaneResolutionX, viewPlaneResolutionY,
                          viewPlaneSizeX, viewPlaneSizeY, viewPlaneDistance};
 
-    Image image(viewPlaneResolutionX, viewPlaneResolutionY); // computed image
-    for(int x = 0; x < viewPlaneResolutionX; x++)
-    for(int y = 0; y < viewPlaneResolutionY; y++) {
-        const auto color = viewPlane.computePixel(scene, x, y, numOfSamples);
-        image.set(x, y, color);
-    }
+    // Compute specified number of frames.
+    for (int n = 0; n < numOfFrames; n++) {                
+        Image image(viewPlaneResolutionX, viewPlaneResolutionY); // computed image
+        for(int x = 0; x < viewPlaneResolutionX; x++)
+        for(int y = 0; y < viewPlaneResolutionY; y++) {
+            const auto color = viewPlane.computePixel(scene, x, y, numOfSamples);
+            image.set(x, y, color);
+        }
 
-    image.saveJPEG("raytracing.jpg");
+        image.saveJPEG("raytracing_" + std::to_string(n) + ".jpg");
+
+        // For a new frame rotate camera on 1 degree around camera's target.
+        scene.setCamera(scene.getCamera().rotatedAroundTarget(1));
+    }
 
     return 0;
 }
